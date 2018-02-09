@@ -2,7 +2,7 @@
 
 namespace PrivateBankingSystem
 {
-    class BankAccount
+    class Transaction
     {
         internal static void Balance(string username)
         {

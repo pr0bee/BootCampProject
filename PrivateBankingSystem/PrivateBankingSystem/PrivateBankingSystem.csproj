@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankAccount.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="LoginScreen.cs" />

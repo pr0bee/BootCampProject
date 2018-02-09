@@ -86,7 +86,7 @@ namespace PrivateBankingSystem
                     string getAccountChoice = Console.ReadLine();
                     if (getAccountChoice == "0")
                     {
-                        BankAccount.Balance(username);
+                        Transaction.Balance(username);
                         Console.WriteLine($"Your account's balance is :{Math.Round(DataBase.GetBalance(username), 2)}");
                         Thread.Sleep(5000);
                         Console.Clear();
@@ -108,14 +108,14 @@ namespace PrivateBankingSystem
                     getAccountChoice = Console.ReadLine();
                     if (getAccountChoice == "0")
                     {
-                        BankAccount.Deposit(username);
+                        Transaction.Deposit(username);
                         Console.WriteLine($"Your account's balance is :{Math.Round(DataBase.GetBalance(username), 2)}");
                     }
                     else
                     {
                         Console.WriteLine("Give the account owner's name");
                         string accountOwner = Console.ReadLine();
-                        BankAccount.Deposit(accountOwner);
+                        Transaction.Deposit(accountOwner);
                     }
                     Thread.Sleep(5000);
                     Console.Clear();
@@ -126,14 +126,14 @@ namespace PrivateBankingSystem
                     getAccountChoice = Console.ReadLine();
                     if (getAccountChoice == "0")
                     {
-                        BankAccount.Withdrawal(username);
+                        Transaction.Withdrawal(username);
                         Console.WriteLine($"Your account's balance is :{Math.Round(DataBase.GetBalance(username), 2)}");
                     }
                     else
                     {
                         Console.WriteLine("Give the account owner's name");
                         string accountOwner = Console.ReadLine();
-                        BankAccount.Withdrawal(accountOwner);
+                        Transaction.Withdrawal(accountOwner);
                     }
                     Thread.Sleep(5000);
                     Console.Clear();
@@ -164,7 +164,7 @@ namespace PrivateBankingSystem
                 {
 
                     case UserChoice.Balance:
-                        BankAccount.Balance(username);
+                        Transaction.Balance(username);
                         Console.WriteLine($"Your account's balance is :{Math.Round(DataBase.GetBalance(username), 2)}");
                         Thread.Sleep(5000);
                         Console.Clear();
@@ -175,14 +175,14 @@ namespace PrivateBankingSystem
                         string answer = Console.ReadLine();
                         if (answer == "0")
                         {
-                            BankAccount.Deposit(username);
+                            Transaction.Deposit(username);
                             goto case UserChoice.Balance;
                         }
                         else
                         {
                             Console.WriteLine("Give the account owner's name");
                             string otherUser = Console.ReadLine();
-                            BankAccount.Deposit(otherUser);
+                            Transaction.Deposit(otherUser);
                         }
                         Thread.Sleep(5000);
                         Console.Clear();
