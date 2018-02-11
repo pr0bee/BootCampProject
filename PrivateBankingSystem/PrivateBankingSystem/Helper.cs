@@ -78,7 +78,7 @@ namespace PrivateBankingSystem
             // Get the bytes of the string.
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             
-            byte[] passPhraseBytes = Encoding.UTF8.GetBytes("my_passphrase_for_the_encryption_of_the_password");
+            byte[] passPhraseBytes = Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings.Get("passPhrase"));
 
             // Hash the password with SHA256
             passPhraseBytes = SHA256.Create().ComputeHash(passPhraseBytes);
