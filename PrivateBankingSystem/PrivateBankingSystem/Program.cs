@@ -33,7 +33,9 @@ namespace PrivateBankingSystem
                 Console.Clear();
             }
 
-            Menu.Display(user.Username, succesfullLogin);
+            user.IsAdmin = DataBase.IsAdmin(user.Username);
+
+            Menu.DisplayUserChoice(user.Username, user.IsAdmin);
 
             Environment.Exit(0);
 

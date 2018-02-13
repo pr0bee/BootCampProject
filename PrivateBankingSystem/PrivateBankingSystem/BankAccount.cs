@@ -12,5 +12,6 @@ namespace PrivateBankingSystem
         public string TypeOfTransaction { get; set; }
         public DateTime TansactionTime { get; set; }
         public string AccountHolder { get; set; }
+        public decimal Balance { get; set; }
     }
 }

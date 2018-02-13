@@ -116,7 +116,23 @@ namespace PrivateBankingSystem
         }
 
 
+        internal static bool IsAdmin(string username)
+        {
+            try
+            {
+                sqlConn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT id FROM users WHERE username = @username", sqlConn);
+                cmd.Parameters.AddWithValue("@username", username);
+                int id = (int)cmd.ExecuteScalar();
+                sqlConn.Close();
+                return (id == 1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
-
+        }
     }
 }
