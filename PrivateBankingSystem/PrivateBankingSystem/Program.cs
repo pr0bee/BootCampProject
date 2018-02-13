@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 
+
 namespace PrivateBankingSystem
 {
     class Program
@@ -35,10 +36,13 @@ namespace PrivateBankingSystem
 
             user.IsAdmin = DataBase.IsAdmin(user.Username);
 
-            Menu.DisplayUserChoice(user.Username, user.IsAdmin);
+            MainMenu.Display(user.Username, user.IsAdmin);
+            
 
             Environment.Exit(0);
 
         }
     }
+
+    
 }
