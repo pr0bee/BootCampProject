@@ -36,10 +36,15 @@ namespace PrivateBankingSystem
 
             user.IsAdmin = DataBase.IsAdmin(user.Username);
 
-            MainMenu.Display(user.Username, user.IsAdmin);
-            
+            user.MenuChoice = MainMenu.DisplayMainMenu(user.Username, user.IsAdmin);
+            //string userMenuchoice = Convert.ToString(MainMenu.DisplayMainMenu(user.Username, user.IsAdmin));
 
-            Environment.Exit(0);
+
+
+
+
+
+            //Environment.Exit(0);
 
         }
     }

@@ -2,17 +2,18 @@
 
 namespace PrivateBankingSystem
 {
+    public delegate void UserTransaction(string username);
+
     class Transaction
     {
+        
+
         internal static void Balance(string username)
         {
             DataBase.GetBalance(username);
         }
 
-        public double Type { get; set; }
-
-
-
+        
         internal static void Deposit(string username)
         {
             decimal balance = DataBase.GetBalance(username);
