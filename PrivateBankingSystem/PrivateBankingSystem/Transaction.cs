@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Threading;
 
 namespace PrivateBankingSystem
 {
-    public delegate void UserTransaction(string username);
+    
 
     class Transaction
     {
-        
+        public delegate void myTransaction(string username, bool isAdmin);
 
-        internal static void Balance(string username)
+        internal static void Balance(string username, bool isAdmin)
         {
-            DataBase.GetBalance(username);
+            decimal balance = DataBase.GetBalance(username);
+            Console.WriteLine(username + " " + Math.Round(balance, 2));
+            Thread.Sleep(5000);
         }
 
         
-        internal static void Deposit(string username)
+        internal static void Deposit(string username, bool isAdmin)
         {
             decimal balance = DataBase.GetBalance(username);
             Console.WriteLine("Enter the ammount of deposit");
@@ -32,7 +35,7 @@ namespace PrivateBankingSystem
             
         }
 
-        internal static void Withdrawal(string username)
+        internal static void Withdrawal(string username, bool isAdmin)
         {
             decimal balance = DataBase.GetBalance(username);
             Console.WriteLine("Enter the ammount of withdrawal");

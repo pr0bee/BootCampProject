@@ -7,7 +7,7 @@ namespace PrivateBankingSystem
         internal static string Username()
         {
             Console.WriteLine("Enter your username : ");
-            return Console.ReadLine()?.ToLower().Trim();
+            return Console.ReadLine().ToLower().Trim();
         }
 
         internal static string Password()

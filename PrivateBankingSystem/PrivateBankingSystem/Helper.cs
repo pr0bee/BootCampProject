@@ -11,7 +11,7 @@ namespace PrivateBankingSystem
 
         internal static string HidePassword()
         {
-            string password = "";
+            string password = String.Empty;
             ConsoleKeyInfo info = Console.ReadKey(true);
             while (info.Key != ConsoleKey.Enter)
             {

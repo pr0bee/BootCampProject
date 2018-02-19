@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace PrivateBankingSystem
 {
-    class BankAccount : User
+    class BankAccount
     {
         public string LoggedUser { get; set; }
-        public string TypeOfTransaction { get; set; }
-        public DateTime TansactionTime { get; set; }
         public string AccountHolder { get; set; }
-        public decimal Balance { get; set; }
-                   
+        public Transaction Transaction { get; set; }
+        public int Balance { get; set; }
+        public DateTime TransactionTimestamp { get; set; }
+
+        public BankAccount(string loggedUser)
+        {
+            LoggedUser = loggedUser;
+        }
     }
 }

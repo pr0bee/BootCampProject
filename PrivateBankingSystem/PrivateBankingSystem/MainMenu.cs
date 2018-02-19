@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 
 namespace PrivateBankingSystem
 {
+    internal enum UserChoice
+    {
+        Withdrawal = 1,
+        Deposit,
+        Balance,
+        GetTransaction,
+        Exit
+    }
+
     class MainMenu
     {
-        internal enum UserChoice
-        {
-            Withdrawal = 1,
-            Deposit,
-            Balance,
-            GetTransaction,
-            Exit
-        }
+        
 
         internal static UserChoice DisplayMainMenu(string username, bool isAdmin)
         {
