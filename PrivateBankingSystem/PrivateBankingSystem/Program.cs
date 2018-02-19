@@ -38,7 +38,7 @@ namespace PrivateBankingSystem
             
             user.IsAdmin = DataBase.IsAdmin(user.Username);
             
-            Transaction.myTransaction myNewTransaction = null;
+            UserTransaction userTransaction = null;
 
             do
             {
@@ -46,13 +46,13 @@ namespace PrivateBankingSystem
                 switch (user.MenuChoice)
                 {
                     case UserChoice.Withdrawal:
-                        myNewTransaction = Transaction.Withdrawal;
+                        userTransaction = BankAccount.Withdrawal;
                         break;
                     case UserChoice.Deposit:
-                        myNewTransaction = Transaction.Deposit;
+                        userTransaction = BankAccount.Deposit;
                         break;
                     case UserChoice.Balance:
-                        myNewTransaction = Transaction.Balance;
+                        userTransaction = BankAccount.GetBalance;
                         break;
                     case UserChoice.GetTransaction:
                         break;
@@ -62,7 +62,8 @@ namespace PrivateBankingSystem
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                myNewTransaction(user.Username, user.IsAdmin);
+                userTransaction(user.Username, user.IsAdmin);
+
             } while (user.MenuChoice != UserChoice.Exit);
             
             
