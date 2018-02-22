@@ -1,5 +1,7 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.Generic;
+using System.IO;
+
 
 namespace PrivateBankingSystem
 {
@@ -16,71 +18,65 @@ namespace PrivateBankingSystem
 
         public override string ToString()
         {
-            return $"Logged user : {LoggedUser}, transaction type : {Transaction}, account holder : {AccountHolder}, amount : {Amount}, account balance : {Balance}, transaction date : {TransactionTimestamp}";
+            return $"{LoggedUser}\t {Transaction}\t {AccountHolder}\t {Math.Round(Amount,2)}\t {Math.Round(Balance,2)}\t B{TransactionTimestamp}";
         }
 
-        //List<BankAccount> transactions = new List<BankAccount>();
-
-
-
-
-
+        internal static List<BankAccount> statements = new List<BankAccount>();
 
         internal static void GetBalance(string username, bool isAdmin)
         {
-            BankAccount transaction = new BankAccount()
+            BankAccount statement = new BankAccount()
             {
                 LoggedUser = username,
-                Transaction = "Balance",
+                Transaction = "Balance"
             };
             if (isAdmin)
             {
-                Console.WriteLine("Check my account (0) or another user (1)");
-                string chooseAccountHolder = Console.ReadLine();
-                if (chooseAccountHolder == "1")
+                string chooseAccount = ChooseAccount();
+                if (chooseAccount == "1")
                 {
                     Console.WriteLine("Enter the account holder's username");
-                    string accountHolder = Console.ReadLine().ToLower().Trim();
+                    string accountHolder = Console.ReadLine()?.ToLower().Trim();
                     bool accountHolderExist = DataBase.UsernameValidation(accountHolder);
                     if (accountHolderExist)
                     {
                         username = accountHolder;
                     }
                 }
-                
             }
 
             decimal balance = DataBase.GetBalance(username);
             
-            transaction.AccountHolder = username;
-            transaction.Balance = balance;
-            transaction.TransactionTimestamp = DateTime.Now;
-            
+            statement.AccountHolder = username;
+            statement.Balance = balance;
+            statement.TransactionTimestamp = DateTime.Now;
 
+            statements.Add(statement);
+            
             Console.WriteLine($"Balance for {username} is {Math.Round(balance, 2)}\n");
             Helper.PressAnyKeyToContinue();
-            
         }
 
-        
         internal static void Deposit(string username, bool isAdmin)
         {
+            BankAccount statement = new BankAccount()
+            {
+                LoggedUser = username,
+                Transaction = "Deposit"
+            };
             if (isAdmin)
             {
-                Console.WriteLine("Deposit to my account (0) or to another user's account (1)");
-                string chooseAccountHolder = Console.ReadLine();
-                if (chooseAccountHolder == "1")
+                string chooseAccount = ChooseAccount();
+                if (chooseAccount == "1")
                 {
                     Console.WriteLine("Enter the account holder's username");
-                    string accountHolder = Console.ReadLine().ToLower().Trim();
+                    string accountHolder = Console.ReadLine()?.ToLower().Trim();
                     bool accountHolderExist = DataBase.UsernameValidation(accountHolder);
                     if (accountHolderExist)
                     {
                         username = accountHolder;
                     }
                 }
-
-
             }
 
             decimal balance = DataBase.GetBalance(username);
@@ -93,18 +89,33 @@ namespace PrivateBankingSystem
             {
                 balance += deposit;
                 DateTime timestamp = DateTime.Now;
-                DataBase.UpdateBalance(username, balance, timestamp);
-            }
+                bool succesfullTransaction = DataBase.UpdateBalance(username, balance, timestamp);
+                if (succesfullTransaction)
+                {
+                    statement.AccountHolder = username;
+                    statement.Amount = deposit;
+                    statement.Balance = balance;
+                    statement.TransactionTimestamp = timestamp;
 
+                    statements.Add(statement); 
+                }
+            }
+            
+            Helper.PressAnyKeyToContinue();
         }
 
         internal static void Withdrawal(string username, bool isAdmin)
         {
+            BankAccount statement = new BankAccount()
+            {
+                LoggedUser = username,
+                Transaction = "Withdrawal"
+            };
+
             if (isAdmin)
             {
-                Console.WriteLine("Withdraw from my account (0) or from another user's account (1)");
-                string chooseAccountHolder = Console.ReadLine();
-                if (chooseAccountHolder == "1")
+                string chooseAccount = ChooseAccount();
+                if (chooseAccount == "1")
                 {
                     Console.WriteLine("Enter the account holder's username");
                     string accountHolder = Console.ReadLine().ToLower().Trim();
@@ -117,7 +128,6 @@ namespace PrivateBankingSystem
 
             }
             
-
             decimal balance = DataBase.GetBalance(username);
             Console.WriteLine("Enter the ammount of withdrawal");
             bool checkInput = decimal.TryParse(Console.ReadLine(), out decimal withdrawal);
@@ -134,14 +144,67 @@ namespace PrivateBankingSystem
                     DateTime timestamp = DateTime.Now;
                     DataBase.UpdateBalance(username, balance, timestamp);
                     Helper.PressAnyKeyToContinue();
+
+                    statement.AccountHolder = username;
+                    statement.Amount = withdrawal;
+                    statement.Balance = balance;
+                    statement.TransactionTimestamp = timestamp;
+
+                    statements.Add(statement);
+                    
                 }
                 else
                 {
                     Console.WriteLine("Insufficient balance");
                     Helper.PressAnyKeyToContinue();
                 }
-
             }
+        }
+
+        internal static void GetStatement(string username, bool isAdmin)
+        {
+            using (StreamWriter statementFile = new StreamWriter(Helper.StatementFileName(username, DateTime.Today), true))
+                foreach (BankAccount statement in statements)
+                {
+                    string[] line = new string[] { statement.LoggedUser, statement.Transaction, statement.AccountHolder, statement.Amount.ToString("C"), statement.Balance.ToString("C"), statement.TransactionTimestamp.ToLongDateString() };
+                    statementFile.WriteLine(Format, line);
+                }
+            statements.Clear();
+            using (StreamReader statementFile = new StreamReader(Helper.StatementFileName(username, DateTime.Today)))
+            {
+                while (!statementFile.EndOfStream)
+                {
+                    string getStatement = statementFile.ReadLine();
+                    Console.WriteLine(getStatement);
+                }
+                Helper.PressAnyKeyToContinue();
+            }
+
+        }
+
+        internal static void Exit(string username, bool isAdmin)
+        {
+            using (StreamWriter statementFile = new StreamWriter(Helper.StatementFileName(username, DateTime.Today), true))
+            foreach (BankAccount statement in statements)
+            {
+                string[] line = new string[]{statement.LoggedUser, statement.Transaction, statement.AccountHolder, statement.Amount.ToString("C"), statement.Balance.ToString("C"), statement.TransactionTimestamp.ToLongTimeString()};
+                statementFile.WriteLine(Format, line);
+            }
+            statements.Clear();
+            Environment.Exit(0);
+        }
+
+        private const string Format = "{0, -12} {1, -12} {2, -15} {3, 13} {4, 13} {5, -30}";
+
+        private static string ChooseAccount()
+        {
+            string chooseAccount = string.Empty;
+            do
+            {
+                Console.WriteLine("My account (0) or other's account (1)");
+                chooseAccount = Console.ReadLine();
+            } while (chooseAccount != "0" && chooseAccount != "1");
+            return chooseAccount;
         }
     }
 }

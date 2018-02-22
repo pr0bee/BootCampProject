@@ -83,7 +83,7 @@ namespace PrivateBankingSystem
             }
         }
 
-        internal static void UpdateBalance(string username, decimal newBalance, DateTime timestamp)
+        internal static bool UpdateBalance(string username, decimal newBalance, DateTime timestamp)
         {
             try
             {
@@ -103,10 +103,12 @@ namespace PrivateBankingSystem
                 if (result != 0)
                 {
                     Console.WriteLine("Transaction completed successfully");
+                    return true;
                 }
                 else
                 {
                     Console.WriteLine("There was no transaction");
+                    return false;
                 }
 
             }
@@ -116,7 +118,6 @@ namespace PrivateBankingSystem
                 throw;
             }
         }
-
 
         internal static bool IsAdmin(string username)
         {

@@ -38,10 +38,10 @@ namespace PrivateBankingSystem
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
-
-        // Source : https://www.codeproject.com/Articles/769741/Csharp-AES-bits-Encryption-Library-with-Salt .
+        
         private static byte[] AES_Encrypt(byte[] passwordBytes, byte[] passPhraseBytes)
         {
+            // Source : https://www.codeproject.com/Articles/769741/Csharp-AES-bits-Encryption-Library-with-Salt .
             byte[] encryptedPasswordBytes = null;
 
             // Set your salt here, change it to meet your flavor:
@@ -95,6 +95,42 @@ namespace PrivateBankingSystem
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
         }
+
+        internal static String StatementFileName(string username, DateTime date)
+        {
+            const string path = @"D:\Dropbox\_BC3\GitHub\BootCampProject\PrivateBankingSystem\";
+            return $"{path}statement_{username}_{date.Day}_{date.Month}_{date.Year}.txt";
+        }
+
+        internal static void CreateStatementFile(string username)
+        {
+            string statmentFileName = Helper.StatementFileName(username, DateTime.Today);
+            
+            if (!File.Exists(statmentFileName))
+            {
+                //string statementFileHeader = $"Logged_user\t Transaction\t Account_holder\t Amount\t Balance\t Transaction_time\n";
+                string[] statementFileHeader = new string[] { "Logged user", "Transaction", "Account holder", "Amount", "Balance", "Transaction_time" };
+                using (StreamWriter statementFile = new StreamWriter(Helper.StatementFileName(username, DateTime.Today), true))
+                statementFile.WriteLine(string.Format(format, statementFileHeader));
+                string statementFileHeaderUnderline = "-";
+                for (int i = 0; i < 95; i++)
+                {
+                    statementFileHeaderUnderline += statementFileHeaderUnderline;
+                }
+                using (StreamWriter statementFile = new StreamWriter(Helper.StatementFileName(username, DateTime.Today), true))
+                statementFile.WriteLine(statementFileHeaderUnderline);
+
+            }
+        }
+
+
+        static string format = "{0, -12} {1, -12} {2, -15} {3, 13} {4, 13} {5, -30}";
+
+        
+
+        
+
+
 
     }
 

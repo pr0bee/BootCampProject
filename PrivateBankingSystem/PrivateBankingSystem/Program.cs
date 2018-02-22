@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 
 
@@ -35,10 +36,12 @@ namespace PrivateBankingSystem
             {
                 Environment.Exit(0);
             }
+
+            Helper.CreateStatementFile(user.Username);
             
             user.IsAdmin = DataBase.IsAdmin(user.Username);
             
-            UserTransaction userTransaction = null;
+            UserTransaction userTransaction;
 
             do
             {
@@ -54,24 +57,20 @@ namespace PrivateBankingSystem
                     case UserChoice.Balance:
                         userTransaction = BankAccount.GetBalance;
                         break;
-                    case UserChoice.GetTransaction:
+                    case UserChoice.GetStatement:
+                        userTransaction = BankAccount.GetStatement;
                         break;
                     case UserChoice.Exit:
-                        Environment.Exit(0);
+                        userTransaction = BankAccount.Exit;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
                 userTransaction(user.Username, user.IsAdmin);
-
             } while (user.MenuChoice != UserChoice.Exit);
             
-            
-
-            
-
+         
         }
     }
-
-    
+   
 }
