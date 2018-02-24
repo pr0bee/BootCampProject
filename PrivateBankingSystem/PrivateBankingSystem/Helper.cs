@@ -108,29 +108,14 @@ namespace PrivateBankingSystem
             
             if (!File.Exists(statmentFileName))
             {
-                //string statementFileHeader = $"Logged_user\t Transaction\t Account_holder\t Amount\t Balance\t Transaction_time\n";
-                string[] statementFileHeader = new string[] { "Logged user", "Transaction", "Account holder", "Amount", "Balance", "Transaction_time" };
+                string[] statementFileHeader = new string[] { "Logged user", "Transaction", "Account holder", "Amount", "Balance", "Transaction_time\n" };
                 using (StreamWriter statementFile = new StreamWriter(Helper.StatementFileName(username, DateTime.Today), true))
-                statementFile.WriteLine(string.Format(format, statementFileHeader));
-                string statementFileHeaderUnderline = "-";
-                for (int i = 0; i < 95; i++)
-                {
-                    statementFileHeaderUnderline += statementFileHeaderUnderline;
-                }
-                using (StreamWriter statementFile = new StreamWriter(Helper.StatementFileName(username, DateTime.Today), true))
-                statementFile.WriteLine(statementFileHeaderUnderline);
-
+                statementFile.WriteLine(string.Format(BankAccount.Format, statementFileHeader));
             }
         }
 
 
-        static string format = "{0, -12} {1, -12} {2, -15} {3, 13} {4, 13} {5, -30}";
-
-        
-
-        
-
-
+        //private static string format = "{0, -12} {1, -12} {2, -15} {3, 13} {4, 13} {5, -30}";
 
     }
 

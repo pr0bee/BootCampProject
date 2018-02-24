@@ -34,6 +34,10 @@ namespace PrivateBankingSystem
 
             if (!succesfullLogin)
             {
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine("Please check your username and password, then try again later.");
+                Thread.Sleep(2500);
                 Environment.Exit(0);
             }
 

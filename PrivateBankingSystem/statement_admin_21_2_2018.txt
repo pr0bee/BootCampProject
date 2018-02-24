@@ -1,5 +1,0 @@
-Logged user  Transaction  Account holder         Amount       Balance Transaction_time              
-admin        Withdrawal   admin                100,00 €  101.257,35 € Τετάρτη, 21 Φεβρουαρίου 2018  
-admin        Withdrawal   user2                 55,67 €    1.395,28 € Τετάρτη, 21 Φεβρουαρίου 2018  
-admin        Deposit      admin                872,00 €  102.129,35 € Τετάρτη, 21 Φεβρουαρίου 2018  
-admin        Deposit      user1                325,45 €    1.401,77 € Τετάρτη, 21 Φεβρουαρίου 2018  

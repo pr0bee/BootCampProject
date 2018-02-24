@@ -35,13 +35,7 @@ namespace PrivateBankingSystem
                 string chooseAccount = ChooseAccount();
                 if (chooseAccount == "1")
                 {
-                    Console.WriteLine("Enter the account holder's username");
-                    string accountHolder = Console.ReadLine()?.ToLower().Trim();
-                    bool accountHolderExist = DataBase.UsernameValidation(accountHolder);
-                    if (accountHolderExist)
-                    {
-                        username = accountHolder;
-                    }
+                    username = NewAccountHolder(username); 
                 }
             }
 
@@ -64,27 +58,27 @@ namespace PrivateBankingSystem
                 LoggedUser = username,
                 Transaction = "Deposit"
             };
-            if (isAdmin)
-            {
-                string chooseAccount = ChooseAccount();
-                if (chooseAccount == "1")
-                {
-                    Console.WriteLine("Enter the account holder's username");
-                    string accountHolder = Console.ReadLine()?.ToLower().Trim();
-                    bool accountHolderExist = DataBase.UsernameValidation(accountHolder);
-                    if (accountHolderExist)
-                    {
-                        username = accountHolder;
-                    }
-                }
-            }
 
+            string chooseAccount = ChooseAccount();
+            if (chooseAccount == "1")
+            {
+                username = NewAccountHolder(username);
+            }
+           
             decimal balance = DataBase.GetBalance(username);
-            Console.WriteLine("Enter the ammount of deposit");
-            decimal deposit = decimal.Parse(Console.ReadLine());
-            Console.Clear();
-            Console.WriteLine($"You entered : {deposit} ? y/n");
+
+            decimal deposit = 0;
+            do
+            {
+                Console.WriteLine("Enter the ammount of deposit");
+                Console.Clear();
+            }
+            while (!decimal.TryParse(Console.ReadLine(), out deposit));
+           
+            Console.WriteLine($"You entered : {Math.Round(deposit,2)} ? y/n");
+
             string answer = Console.ReadLine();
+
             if (answer == "y")
             {
                 balance += deposit;
@@ -117,13 +111,7 @@ namespace PrivateBankingSystem
                 string chooseAccount = ChooseAccount();
                 if (chooseAccount == "1")
                 {
-                    Console.WriteLine("Enter the account holder's username");
-                    string accountHolder = Console.ReadLine().ToLower().Trim();
-                    bool accountHolderExist = DataBase.UsernameValidation(accountHolder);
-                    if (accountHolderExist)
-                    {
-                        username = accountHolder;
-                    }
+                    username = NewAccountHolder(username);
                 }
 
             }
@@ -194,17 +182,42 @@ namespace PrivateBankingSystem
             Environment.Exit(0);
         }
 
-        private const string Format = "{0, -12} {1, -12} {2, -15} {3, 13} {4, 13} {5, -30}";
+        internal const string Format = "{0, -12} {1, -12} {2, -15} {3, 13} {4, 13} {5, -30}";
 
         private static string ChooseAccount()
         {
             string chooseAccount = string.Empty;
+            bool inputIsFromBlackList ;
             do
             {
                 Console.WriteLine("My account (0) or other's account (1)");
                 chooseAccount = Console.ReadLine();
-            } while (chooseAccount != "0" && chooseAccount != "1");
+                inputIsFromBlackList = (chooseAccount != "0" & chooseAccount != "1") | string.IsNullOrEmpty(chooseAccount);
+            } while (inputIsFromBlackList);
             return chooseAccount;
         }
+
+        private static string NewAccountHolder(string username)
+        {
+            bool accountHolderExist = false;
+            string newAccountHolder = String.Empty;
+            do
+            {
+                do
+                {
+                    Console.WriteLine("Enter the account holder's username");
+                    newAccountHolder = Console.ReadLine()?.ToLower().Trim(); 
+                }
+                while (newAccountHolder == username);
+                
+                accountHolderExist = DataBase.UsernameValidation(newAccountHolder);
+            }
+            while (!accountHolderExist);
+            return newAccountHolder;
+        }
+            
+        
+
+
     }
 }

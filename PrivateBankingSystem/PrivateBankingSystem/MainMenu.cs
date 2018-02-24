@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 
 namespace PrivateBankingSystem
 {
@@ -15,45 +16,43 @@ namespace PrivateBankingSystem
     class MainMenu
     {
         
-
         internal static UserChoice DisplayMainMenu(string username, bool isAdmin)
         {
-
             // Removes Withdrawal choice for simple users.
             if (!isAdmin)
             {
                 userChoiceList = userChoiceList.Remove(34, 14);
             }
 
-            string userChoice = string.Empty;
+            int userChoice = 0;
             do
             {
-                Console.Clear();
-                Console.WriteLine($"Welcome {username} !\n\b" + "Main Menu");
-                Console.WriteLine(userChoiceList);
-                userChoice = Console.ReadLine();
+                do
+                {
+                    Console.Clear();
+                    Thread.Sleep(200);
+                    Console.WriteLine($"Welcome {username} !\n\b" + "Main Menu");
+                    Console.WriteLine(userChoiceList);
+                } while (!int.TryParse(Console.ReadLine(), out userChoice));
+                
                 Console.Clear();
             } while (NotProperChoice(userChoice, isAdmin));
-            return (UserChoice) Enum.Parse(typeof(UserChoice), userChoice);
+            return (UserChoice) Enum.Parse(typeof(UserChoice), userChoice.ToString());
         }
 
         // Checking that the user will choose from the list.
-        private static bool NotProperChoice(string userChoice, bool isAdmin)
+        private static bool NotProperChoice(int userChoice, bool isAdmin)
         {
-            bool inputIsInteger = int.TryParse(userChoice, out int intChoice);
             bool notProperChoice = false;
 
-            if (inputIsInteger)
-            {
                 if (isAdmin)
                 {
-                    notProperChoice = intChoice < 1 || intChoice > 5;
+                    notProperChoice = userChoice < 1 || userChoice > 5;
                 }
                 else
                 {
-                    notProperChoice = intChoice < 2 || intChoice > 5;
+                    notProperChoice = userChoice < 2 || userChoice > 5;
                 }
-            }
             return notProperChoice;
         }
 

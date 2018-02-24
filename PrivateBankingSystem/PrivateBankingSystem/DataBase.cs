@@ -42,11 +42,13 @@ namespace PrivateBankingSystem
 
                 if (result > 0)
                 {
+                    Console.Clear();
                     Console.WriteLine("Login Successfull");
                     return true;
                 }
                 else
                 {
+                    Console.Clear();
                     Console.WriteLine("Login Failed");
                     return false;
                 }
@@ -56,10 +58,7 @@ namespace PrivateBankingSystem
                 Console.WriteLine(ex.Message);
                 return false;
             }
-            //finally
-            //{
-            //    Console.ReadKey();
-            //}
+            
         }
 
         internal static decimal GetBalance(string username)
@@ -74,7 +73,6 @@ namespace PrivateBankingSystem
                 decimal balance = (decimal) cmd.ExecuteScalar();
                 sqlConn.Close();
                 return balance;
-                //Console.WriteLine($"Your Account's Balance is : {Math.Round(result,2)} ");
             }
             catch (Exception ex)
             {
@@ -92,8 +90,7 @@ namespace PrivateBankingSystem
                                                 "SET amount = @newBalance, " +
                                                 "transaction_date = @timestamp " +
                                                 "WHERE accounts.user_id IN (SELECT accounts.user_id from accounts, users " +
-                                                "WHERE accounts.user_id = users.id AND users.username = @username)",
-                    sqlConn);
+                                                "WHERE accounts.user_id = users.id AND users.username = @username)",sqlConn);
                 cmd.Parameters.AddWithValue("@username", username);
                 cmd.Parameters.AddWithValue("@newBalance", newBalance);
                 cmd.Parameters.AddWithValue("@timestamp", timestamp);
