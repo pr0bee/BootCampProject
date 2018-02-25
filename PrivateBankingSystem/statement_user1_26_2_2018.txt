@@ -1,0 +1,3 @@
+Logged user  Transaction      Account holder         Amount       Balance Transaction_time
+                                 
+user1        Transfer from    admin                250,00 €    3.520,52 € 01:37:27                                          

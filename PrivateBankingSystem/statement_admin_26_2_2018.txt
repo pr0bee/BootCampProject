@@ -1,0 +1,11 @@
+Logged user  Transaction      Account holder         Amount       Balance Transaction_time
+                                 
+admin        Withdrawal       admin                250,00 €  108.919,35 € 01:35:32                                          
+admin        Withdrawal       admin                150,00 €  108.769,35 € 01:35:54                                          
+admin        Deposit          admin              1.000,00 €  109.769,35 € 01:36:21                                          
+admin        Deposit          user1                500,00 €    3.270,52 € 01:36:37                                          
+admin        Deposit          user2                500,00 €    1.860,78 € 01:37:01                                          
+admin        Deposit          user2                150,00 €    2.010,78 € 01:37:15                                          
+admin        Transfer to      user1                250,00 €  109.519,35 € 01:37:27                                          
+admin        Transfer to      user2                350,65 €  109.168,70 € 01:37:46                                          
+admin        Balance          admin                  0,00 €  109.168,70 € 01:37:57                                          

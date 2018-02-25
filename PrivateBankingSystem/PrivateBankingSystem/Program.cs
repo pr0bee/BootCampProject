@@ -58,6 +58,9 @@ namespace PrivateBankingSystem
                     case UserChoice.Deposit:
                         userTransaction = BankAccount.Deposit;
                         break;
+                    case UserChoice.Transfer:
+                        userTransaction = BankAccount.Transfer;
+                        break;
                     case UserChoice.Balance:
                         userTransaction = BankAccount.GetBalance;
                         break;

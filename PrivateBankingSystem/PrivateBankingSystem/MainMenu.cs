@@ -8,6 +8,7 @@ namespace PrivateBankingSystem
     {
         Withdrawal = 1,
         Deposit,
+        Transfer,
         Balance,
         GetStatement,
         Exit
@@ -31,7 +32,9 @@ namespace PrivateBankingSystem
                 {
                     Console.Clear();
                     Thread.Sleep(200);
-                    Console.WriteLine($"Welcome {username} !\n\b" + "Main Menu");
+                    Console.WriteLine($"Welcome {username} !\n" +
+                                      $"\n" +
+                                      $"Main Menu\n");
                     Console.WriteLine(userChoiceList);
                 } while (!int.TryParse(Console.ReadLine(), out userChoice));
                 
@@ -47,22 +50,24 @@ namespace PrivateBankingSystem
 
                 if (isAdmin)
                 {
-                    notProperChoice = userChoice < 1 || userChoice > 5;
+                    notProperChoice = userChoice < 1 || userChoice > 6;
                 }
                 else
                 {
-                    notProperChoice = userChoice < 2 || userChoice > 5;
+                    notProperChoice = userChoice < 2 || userChoice > 6;
                 }
             return notProperChoice;
         }
 
 
-        private static StringBuilder userChoiceList = new StringBuilder("Please choose from the list below\n" +
-                                                                        $"{UserChoice.Withdrawal} : {(int) UserChoice.Withdrawal}\n" +
-                                                                        $"{UserChoice.Deposit} : {(int) UserChoice.Deposit}\n" +
-                                                                        $"{UserChoice.Balance} : {(int) UserChoice.Balance}\n" +
-                                                                        $"{UserChoice.GetStatement} : {(int) UserChoice.GetStatement}\n" +
-                                                                        $"{UserChoice.Exit} : {(int) UserChoice.Exit}");
+        private static StringBuilder userChoiceList = new StringBuilder($"Please choose from the list below :\n" +
+                                                                        $"\n" +
+                                                                        $"{(int) UserChoice.Withdrawal} : {UserChoice.Withdrawal}\n" +
+                                                                        $"{(int) UserChoice.Deposit} : {UserChoice.Deposit}\n" +
+                                                                        $"{(int) UserChoice.Transfer} : {UserChoice.Transfer}\n" +
+                                                                        $"{(int) UserChoice.Balance} : {UserChoice.Balance}\n" +
+                                                                        $"{(int) UserChoice.GetStatement} : {UserChoice.GetStatement}\n" +
+                                                                        $"{(int) UserChoice.Exit} : {UserChoice.Exit}");
 
     }
 }
