@@ -28,7 +28,7 @@ namespace PrivateBankingSystem
 
                 logginAttempts++;
 
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
                 Console.Clear();
             } while (!succesfullLogin && logginAttempts < 3);
 
@@ -37,7 +37,7 @@ namespace PrivateBankingSystem
                 Console.Clear();
                 Console.WriteLine();
                 Console.WriteLine("Please check your username and password, then try again later.");
-                Thread.Sleep(2500);
+                Thread.Sleep(1000);
                 Environment.Exit(0);
             }
 
@@ -50,6 +50,7 @@ namespace PrivateBankingSystem
             do
             {
                 user.MenuChoice = MainMenu.DisplayMainMenu(user.Username, user.IsAdmin);
+
                 switch (user.MenuChoice)
                 {
                     case UserChoice.Withdrawal:
@@ -73,8 +74,10 @@ namespace PrivateBankingSystem
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
                 userTransaction(user.Username, user.IsAdmin);
-            } while (user.MenuChoice != UserChoice.Exit);
+            }
+            while (user.MenuChoice != UserChoice.Exit);
             
          
         }

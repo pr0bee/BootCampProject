@@ -19,12 +19,12 @@ namespace PrivateBankingSystem
         public DateTime TransactionTimestamp { get; set; }
 
 
-        DateTimeFormatInfo myDTFI = new CultureInfo("el-GR", false).DateTimeFormat;
+        DateTimeFormatInfo elDateTimeFormat= new CultureInfo("el-GR", false).DateTimeFormat;
         
         public override string ToString()
         {
             return $"{LoggedUser}\t {Transaction}\t {AccountHolder}\t {Math.Round(Amount,2)}\t" +
-                   $" {Math.Round(Balance,2)}\t {TransactionTimestamp.ToString(myDTFI.UniversalSortableDateTimePattern)}";
+                   $" {Math.Round(Balance,2)}\t {TransactionTimestamp.ToString(elDateTimeFormat.UniversalSortableDateTimePattern)}";
         }
 
         private static List<BankAccount> statements = new List<BankAccount>();

@@ -43,18 +43,18 @@ namespace PrivateBankingSystem
             return (UserChoice) Enum.Parse(typeof(UserChoice), userChoice.ToString());
         }
 
-        // Checking that the user will choose from the list.
+        // Checking that the user's choice against the list.
         private static bool NotProperChoice(int userChoice, bool isAdmin)
         {
             bool notProperChoice = false;
 
                 if (isAdmin)
                 {
-                    notProperChoice = userChoice < 1 || userChoice > 6;
+                    notProperChoice = userChoice < (int)UserChoice.Withdrawal || userChoice > (int)UserChoice.Exit;
                 }
                 else
                 {
-                    notProperChoice = userChoice < 2 || userChoice > 6;
+                    notProperChoice = userChoice < (int)UserChoice.Deposit || userChoice > (int)UserChoice.Exit;
                 }
             return notProperChoice;
         }
