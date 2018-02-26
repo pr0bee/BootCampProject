@@ -19,7 +19,7 @@ namespace PrivateBankingSystem
         public DateTime TransactionTimestamp { get; set; }
 
 
-        DateTimeFormatInfo elDateTimeFormat= new CultureInfo("el-GR", false).DateTimeFormat;
+        DateTimeFormatInfo elDateTimeFormat = new CultureInfo("el-GR", false).DateTimeFormat;
         
         public override string ToString()
         {
@@ -84,14 +84,15 @@ namespace PrivateBankingSystem
 
         internal static void Deposit(string username, bool isAdmin)
         {
+            decimal balance = DataBase.GetBalance(username);
+
             BankAccount statement = new BankAccount()
             {
                 LoggedUser = username,
-                Transaction = "Deposit"
+                Transaction = "Deposit",
+                Balance = balance
             };
-
-            decimal balance = DataBase.GetBalance(username);
-
+            
             string chooseAccount = ChooseAccount();
             if (chooseAccount == "1")
             {
@@ -115,7 +116,7 @@ namespace PrivateBankingSystem
                 {
                     statement.AccountHolder = username;
                     statement.Amount = deposit;
-                    statement.Balance = balance;
+                    
                     statement.TransactionTimestamp = timestamp;
 
                     statements.Add(statement);

@@ -16,13 +16,11 @@ namespace PrivateBankingSystem
 
     class MainMenu
     {
-        
         internal static UserChoice DisplayMainMenu(string username, bool isAdmin)
         {
-            // Removes Withdrawal choice for simple users.
             if (!isAdmin)
             {
-                userChoiceList = userChoiceList.Remove(34, 14);
+                userChoiceList = simpleUserChoiceList;
             }
 
             int userChoice = 0;
@@ -69,5 +67,12 @@ namespace PrivateBankingSystem
                                                                         $"{(int) UserChoice.GetStatement} : {UserChoice.GetStatement}\n" +
                                                                         $"{(int) UserChoice.Exit} : {UserChoice.Exit}");
 
+        private static StringBuilder simpleUserChoiceList = new StringBuilder($"Please choose from the list below :\n" +
+                                                                              $"\n" +
+                                                                              $"{(int)UserChoice.Deposit} : {UserChoice.Deposit}\n" +
+                                                                              $"{(int)UserChoice.Transfer} : {UserChoice.Transfer}\n" +
+                                                                              $"{(int)UserChoice.Balance} : {UserChoice.Balance}\n" +
+                                                                              $"{(int)UserChoice.GetStatement} : {UserChoice.GetStatement}\n" +
+                                                                              $"{(int)UserChoice.Exit} : {UserChoice.Exit}");
     }
 }
